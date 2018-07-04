@@ -66,8 +66,8 @@ const resultIcons = {
 
 const audioTests = [
   {
-    title: 'mp3 in bundle (looped)',
-    url: 'advertising.mp3',
+    title: 'Mere Rashke Qamar',
+    url: 'mere_rashke_qamar.mp3',
     basePath: Sound.MAIN_BUNDLE,
     onPrepared: (sound, component) => {
       sound.setNumberOfLoops(-1);
@@ -75,13 +75,17 @@ const audioTests = [
     },
   },
   {
-    title: 'Mere Rashke Qamar',
-    isRequire: true,
-    url: require('./mere_rashke_qamar.mp3'),
+    title: 'Piya Mores',
+    url: 'piya_more.mp3',
+    basePath: Sound.MAIN_BUNDLE,
+    onPrepared: (sound, component) => {
+      sound.setNumberOfLoops(-1);
+      component.setState({loopingSound: sound});
+    },
   },
   {
     title: 'Advertising',
-    url: './advertising.mp3',
+    url: 'advertising.mp3',
   },
   {
     title: 'mp3 remote - file doesn\'t exist',
@@ -108,7 +112,7 @@ function playSound(testInfo, component) {
     setTestState(testInfo, component, 'playing');
     // Run optional pre-play callback
     testInfo.onPrepared && testInfo.onPrepared(sound, component);
-    sound.setVolume(.5).setPan(.5).play(() => {
+    sound.play(() => {
       // Success counts as getting to the end
       setTestState(testInfo, component, 'win');
       // Release when it's done so we're not using up resources
@@ -165,7 +169,6 @@ class MainView extends Component {
           })}
           <Feature title="mp3 in bundle (looped)" buttonLabel={'STOP'} onPress={this.stopSoundLooped} />
         </ScrollView>
-        <Text>This is working Great</Text>
       </View>
     );
   }
